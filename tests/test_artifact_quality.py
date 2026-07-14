@@ -28,3 +28,12 @@ def test_summary_is_fully_filled():
     assert not any(term.lower() in summary.lower() for term in forbidden)
     assert "8.94%" in summary
     assert "Rs. 76,843" in summary
+
+
+def test_kpi_scorecard_is_present_and_consistent():
+    scorecard = pd.read_csv(PROJECT_DIR / "outputs" / "kpi_scorecard.csv")
+    metrics = dict(zip(scorecard["metric"], scorecard["value"]))
+
+    assert float(metrics["ensemble_mape"]) < 12.0
+    assert metrics["quality_gate_status"] == "pass"
+    assert int(float(metrics["plot_count"])) >= 12

@@ -1,7 +1,10 @@
-.PHONY: install run smoke validate test
+.PHONY: install data run smoke validate test
 
 install:
 	python -m pip install -r requirements.txt
+
+data:
+	python src/download_data.py --project-dir .
 
 run:
 	python src/run_pipeline.py --project-dir .

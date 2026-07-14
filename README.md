@@ -52,7 +52,9 @@ This project answers that with:
 - [Top reorder points](outputs/reorder_points_top10.csv)
 - [Bias diagnostics](outputs/bias_table.csv)
 - [Quality gate report](outputs/quality_gate_report.json)
+- [KPI scorecard](outputs/kpi_scorecard.csv)
 - [Executive report](reports/executive_report.md)
+- [Portfolio case study](reports/portfolio_case_study.md)
 
 ## Plot Gallery
 
@@ -77,8 +79,11 @@ demand_forecasting/
 │   └── store.csv
 ├── docs/
 │   ├── DATA_CARD.md
+│   ├── FEATURE_DICTIONARY.md
+│   ├── INTERVIEW_GUIDE.md
 │   ├── MODEL_CARD.md
-│   └── INTERVIEW_GUIDE.md
+│   ├── OPERATIONS_PLAYBOOK.md
+│   └── REPRODUCIBILITY.md
 ├── outputs/
 │   ├── plot_*.png
 │   ├── results_table.csv
@@ -86,8 +91,10 @@ demand_forecasting/
 │   ├── reorder_points_top10.csv
 │   └── quality_gate_report.json
 ├── reports/
-│   └── executive_report.md
+│   ├── executive_report.md
+│   └── portfolio_case_study.md
 ├── src/
+│   ├── download_data.py
 │   ├── run_pipeline.py
 │   └── validate_artifacts.py
 ├── tests/
@@ -102,6 +109,7 @@ demand_forecasting/
 
 ```powershell
 python -m pip install -r requirements.txt
+python src/download_data.py --project-dir .
 python src/run_pipeline.py --project-dir .
 python src/validate_artifacts.py --project-dir .
 ```

@@ -6,6 +6,7 @@
   "checks": {
     "data_files_present": true,
     "required_outputs_present": true,
+    "required_docs_present": true,
     "required_plots_present": true,
     "plot_count_at_least_12": true,
     "ensemble_mape_below_12": true,

@@ -1,0 +1,15 @@
+metric,value,unit
+clean_forecastable_rows,844338,rows
+model_ready_rows,781898,rows
+stores_modeled,1115,stores
+engineered_features,44,features
+holdout_window,6,weeks
+naive_mape,20.06624654150742,percent
+xgboost_mape,9.108662263165392,percent
+lightgbm_mape,8.980790731806678,percent
+ensemble_mape,8.944470664507781,percent
+mape_improvement_vs_naive,11.121775876999638,percentage_points
+safety_stock_reduction,58.19884526560104,percent
+working_capital_freed_per_store,76842.70099805338,INR_per_store_year
+plot_count,18,plots
+quality_gate_status,pass,status

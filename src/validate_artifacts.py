@@ -14,6 +14,18 @@ REQUIRED_OUTPUTS = [
     "reorder_points_top10.csv",
     "bias_table.csv",
     "run_metadata.json",
+    "kpi_scorecard.csv",
+]
+
+REQUIRED_DOCS = [
+    "docs/DATA_CARD.md",
+    "docs/MODEL_CARD.md",
+    "docs/FEATURE_DICTIONARY.md",
+    "docs/REPRODUCIBILITY.md",
+    "docs/OPERATIONS_PLAYBOOK.md",
+    "docs/INTERVIEW_GUIDE.md",
+    "reports/executive_report.md",
+    "reports/portfolio_case_study.md",
 ]
 
 REQUIRED_PLOTS = [
@@ -41,6 +53,7 @@ def validate(project_dir: Path) -> dict:
     checks = {}
     checks["data_files_present"] = all((project_dir / "data" / name).exists() for name in ["train.csv", "store.csv"])
     checks["required_outputs_present"] = all((outputs_dir / name).exists() for name in REQUIRED_OUTPUTS)
+    checks["required_docs_present"] = all((project_dir / name).exists() for name in REQUIRED_DOCS)
     checks["required_plots_present"] = all((outputs_dir / name).exists() and (outputs_dir / name).stat().st_size > 10_000 for name in REQUIRED_PLOTS)
     checks["plot_count_at_least_12"] = len(list(outputs_dir.glob("plot_*.png"))) >= 12
 
