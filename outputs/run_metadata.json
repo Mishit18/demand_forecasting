@@ -1,0 +1,106 @@
+{
+  "eda": {
+    "mean": 6955.959133664481,
+    "median": 6369.0,
+    "std": 3103.8155154905594,
+    "skew": 1.5949260022979126,
+    "kurtosis": 4.8539907351328795,
+    "promo_median_lift_pct": 40.13555596263052,
+    "promo_mannwhitney_p": 0.0,
+    "storetype_anova_p": 0.0
+  },
+  "safety": {
+    "naive_sigma": 2022.469926998267,
+    "ensemble_sigma": 845.4157836412313,
+    "safety_reduction_pct": 58.19884526560104,
+    "reduction_units_95_7day": 5122.846733203558,
+    "rs_freed_per_store": 76842.70099805338
+  },
+  "bias": {
+    "bias_correction_error_reduction_pct": 0.9994739261233732,
+    "bias_correction": [
+      {
+        "StoreType": "a",
+        "correction_factor": 0.9917708883989456
+      },
+      {
+        "StoreType": "b",
+        "correction_factor": 0.998447336285427
+      },
+      {
+        "StoreType": "c",
+        "correction_factor": 0.9932878402260138
+      },
+      {
+        "StoreType": "d",
+        "correction_factor": 0.9852244228448716
+      }
+    ]
+  },
+  "model_meta": {
+    "xgb_params": {
+      "n_estimators": 661,
+      "max_depth": 8,
+      "learning_rate": 0.02097077545038924,
+      "subsample": 0.989468448256698,
+      "colsample_bytree": 0.9329770563201687,
+      "min_child_weight": 3,
+      "reg_alpha": 8.111941985431919e-05,
+      "reg_lambda": 9.38064731522413e-05,
+      "random_state": 42,
+      "tree_method": "hist",
+      "n_jobs": -1,
+      "eval_metric": "mae"
+    },
+    "lgb_params": {
+      "n_estimators": 320,
+      "max_depth": 10,
+      "learning_rate": 0.04965694691714868,
+      "num_leaves": 133,
+      "subsample": 0.7390473940509578,
+      "colsample_bytree": 0.6227539746604607,
+      "min_child_samples": 106,
+      "reg_alpha": 0.0001273928282277821,
+      "random_state": 42,
+      "verbose": -1,
+      "n_jobs": -1
+    },
+    "ensemble_weights": {
+      "Naive": 0.0,
+      "XGBoost": 0.20832519844287758,
+      "LightGBM": 0.7916748015571224
+    },
+    "xgb_study_values": [
+      11.509045102252031,
+      11.300631447864605,
+      11.415303468798207,
+      11.411041875650794,
+      12.028539793089132,
+      11.952864743886238,
+      12.088442489247678,
+      12.210346209011979
+    ],
+    "lgb_study_values": [
+      11.398810174728311,
+      11.14566872921497,
+      11.485372848414963,
+      11.158694115493,
+      11.949249774199304,
+      11.554302765037589,
+      11.337939024105276,
+      11.31826757910195
+    ],
+    "sarimax": {
+      "store": 262,
+      "order": "(2, d, 2)",
+      "seasonal_order": "(1, 0, 1, 7)",
+      "aic": 16164.164528111709,
+      "adf_p": 3.071147864084613e-06,
+      "kpss_p": 0.1,
+      "ljung_box_p": 0.1607599264944221,
+      "mape": 9.055720123340485,
+      "avg_mape": 13.97374597584817,
+      "std_mape": 6.3090371804747205
+    }
+  }
+}
