@@ -44,7 +44,7 @@ The largest systematic segment bias is StoreType d in month 6, with mean bias of
 
 ## Resume-Ready Bullets
 
-- Built 8-model demand forecasting benchmark on 844,338 Rossmann retail records; achieved 8.94% MAPE on six-week holdout across 1,115 stores.
+- Built 8-method demand forecasting benchmark on 844,338 Rossmann retail records; achieved 8.94% MAPE on six-week holdout across 1,115 stores.
 - Engineered 44 lag, rolling, calendar, promo and store features with strict causal constraints; Optuna-tuned XGBoost achieved 9.11% MAPE vs. 20.07% naive baseline.
 - Translated 11.12pp MAPE improvement into 58.2% safety-stock reduction at 95% service level; estimated Rs. 76,843 working capital freed per store annually.
 - Diagnosed systematic forecast bias in StoreType d month 6; correction reduced mean forecast error by 1.0%, improving reorder-point accuracy.

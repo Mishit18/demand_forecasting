@@ -208,7 +208,8 @@ def days_since_event(df: pd.DataFrame, event_col: str) -> pd.Series:
         vals[np.isnat(last)] = 999
         return pd.Series(vals, index=s.index)
 
-    return df.groupby("Store", group_keys=False).apply(one_store)
+    parts = [one_store(store_df) for _, store_df in df.groupby("Store", sort=False)]
+    return pd.concat(parts).sort_index()
 
 
 def days_until_event(df: pd.DataFrame, event_col: str) -> pd.Series:
@@ -221,7 +222,8 @@ def days_until_event(df: pd.DataFrame, event_col: str) -> pd.Series:
         vals[np.isnat(nxt)] = 999
         return pd.Series(vals, index=rev.index).sort_index()
 
-    return df.groupby("Store", group_keys=False).apply(one_store)
+    parts = [one_store(store_df) for _, store_df in df.groupby("Store", sort=False)]
+    return pd.concat(parts).sort_index()
 
 
 def mape(y_true, y_pred) -> float:

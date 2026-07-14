@@ -13,3 +13,4 @@ scipy>=1.10
 nbformat>=5.9
 nbconvert>=7.0
 kagglehub>=0.3
+pytest>=8.0
