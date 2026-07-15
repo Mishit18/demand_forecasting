@@ -1,0 +1,47 @@
+{
+  "project": "rossmann-demand-forecasting",
+  "version": "1.0.0",
+  "random_seed": 42,
+  "target": "Sales",
+  "holdout": {
+    "type": "date_based",
+    "window": "final_6_weeks",
+    "start": "2015-06-20",
+    "end": "2015-07-31"
+  },
+  "champion_model": {
+    "name": "Ensemble",
+    "holdout_mape": 8.944470664507781,
+    "weights": {
+      "Naive": 0.0,
+      "XGBoost": 0.20832519844287758,
+      "LightGBM": 0.7916748015571224
+    }
+  },
+  "challenger_models": [
+    {
+      "name": "LightGBM",
+      "holdout_mape": 8.980790731806678
+    },
+    {
+      "name": "XGBoost",
+      "holdout_mape": 9.108662263165392
+    },
+    {
+      "name": "Naive",
+      "holdout_mape": 20.06624654150742
+    }
+  ],
+  "inventory_impact": {
+    "service_level": 0.95,
+    "lead_time_days": 7,
+    "safety_stock_reduction_pct": 58.19884526560104,
+    "working_capital_freed_rs_per_store_year": 76842.70099805338
+  },
+  "leakage_controls": [
+    "date-based holdout",
+    "shifted lags and rolling windows",
+    "Customers excluded from feature matrix",
+    "no random train-test split"
+  ]
+}

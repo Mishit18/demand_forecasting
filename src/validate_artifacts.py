@@ -26,6 +26,13 @@ REQUIRED_DOCS = [
     "docs/INTERVIEW_GUIDE.md",
     "reports/executive_report.md",
     "reports/portfolio_case_study.md",
+    "docs/PROJECT_SCORE.md",
+]
+
+REQUIRED_APP_FILES = [
+    "app/streamlit_app.py",
+    "config/model_registry.json",
+    "src/inventory_policy.py",
 ]
 
 REQUIRED_PLOTS = [
@@ -54,6 +61,7 @@ def validate(project_dir: Path) -> dict:
     checks["data_files_present"] = all((project_dir / "data" / name).exists() for name in ["train.csv", "store.csv"])
     checks["required_outputs_present"] = all((outputs_dir / name).exists() for name in REQUIRED_OUTPUTS)
     checks["required_docs_present"] = all((project_dir / name).exists() for name in REQUIRED_DOCS)
+    checks["dashboard_and_registry_present"] = all((project_dir / name).exists() for name in REQUIRED_APP_FILES)
     checks["required_plots_present"] = all((outputs_dir / name).exists() and (outputs_dir / name).stat().st_size > 10_000 for name in REQUIRED_PLOTS)
     checks["plot_count_at_least_12"] = len(list(outputs_dir.glob("plot_*.png"))) >= 12
 
@@ -62,6 +70,9 @@ def validate(project_dir: Path) -> dict:
     naive_mape = float(results.loc[results["Model"].eq("Naive"), "Holdout MAPE"].iloc[0])
     checks["ensemble_mape_below_12"] = ensemble_mape < 12.0
     checks["ensemble_beats_naive"] = ensemble_mape < naive_mape
+
+    registry = json.loads((project_dir / "config" / "model_registry.json").read_text(encoding="utf-8"))
+    checks["registry_matches_results"] = abs(float(registry["champion_model"]["holdout_mape"]) - ensemble_mape) < 1e-9
 
     summary = summary_path.read_text(encoding="utf-8")
     placeholder_terms = ["[X]", "[Y]", "[Z]", "TODO", "TBD", "placeholder"]

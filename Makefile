@@ -1,4 +1,4 @@
-.PHONY: install data run smoke validate test
+.PHONY: install data run smoke validate test dashboard
 
 install:
 	python -m pip install -r requirements.txt
@@ -17,3 +17,6 @@ validate:
 
 test:
 	python -m pytest
+
+dashboard:
+	streamlit run app/streamlit_app.py

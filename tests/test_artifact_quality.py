@@ -37,3 +37,14 @@ def test_kpi_scorecard_is_present_and_consistent():
     assert float(metrics["ensemble_mape"]) < 12.0
     assert metrics["quality_gate_status"] == "pass"
     assert int(float(metrics["plot_count"])) >= 12
+
+
+def test_model_registry_matches_results():
+    import json
+
+    results = pd.read_csv(PROJECT_DIR / "outputs" / "results_table.csv")
+    ensemble = float(results.loc[results["Model"].eq("Ensemble"), "Holdout MAPE"].iloc[0])
+    registry = json.loads((PROJECT_DIR / "config" / "model_registry.json").read_text(encoding="utf-8"))
+
+    assert registry["champion_model"]["name"] == "Ensemble"
+    assert abs(float(registry["champion_model"]["holdout_mape"]) - ensemble) < 1e-9

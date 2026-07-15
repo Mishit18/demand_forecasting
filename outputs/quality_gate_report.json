@@ -7,10 +7,12 @@
     "data_files_present": true,
     "required_outputs_present": true,
     "required_docs_present": true,
+    "dashboard_and_registry_present": true,
     "required_plots_present": true,
     "plot_count_at_least_12": true,
     "ensemble_mape_below_12": true,
     "ensemble_beats_naive": true,
+    "registry_matches_results": true,
     "summary_has_no_placeholders": true,
     "summary_has_rs_headline": true,
     "notebook_json_valid": true

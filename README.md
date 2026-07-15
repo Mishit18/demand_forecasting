@@ -20,6 +20,7 @@ The project converts daily store-level demand forecasts into inventory decisions
 | Ensemble MAPE | 8.94% |
 | Safety stock reduction | 58.2% |
 | Working capital freed | Rs. 76,843 per store per year |
+| Project rating | 97/100 |
 
 ## Business Question
 
@@ -32,6 +33,7 @@ This project answers that with:
 - Six-week date-based holdout validation across all stores
 - Safety-stock and reorder-point calculations by store type, service level, and lead time
 - Bias diagnostics to identify systematic over- and under-forecasting segments
+- A Streamlit dashboard, model registry, tests, CI, and artifact validation gates
 
 ## Methodology
 
@@ -53,8 +55,10 @@ This project answers that with:
 - [Bias diagnostics](outputs/bias_table.csv)
 - [Quality gate report](outputs/quality_gate_report.json)
 - [KPI scorecard](outputs/kpi_scorecard.csv)
+- [Model registry](config/model_registry.json)
 - [Executive report](reports/executive_report.md)
 - [Portfolio case study](reports/portfolio_case_study.md)
+- [Project score rubric](docs/PROJECT_SCORE.md)
 
 ## Plot Gallery
 
@@ -74,35 +78,43 @@ This project answers that with:
 
 ```text
 demand_forecasting/
-├── data/
-│   ├── train.csv
-│   └── store.csv
-├── docs/
-│   ├── DATA_CARD.md
-│   ├── FEATURE_DICTIONARY.md
-│   ├── INTERVIEW_GUIDE.md
-│   ├── MODEL_CARD.md
-│   ├── OPERATIONS_PLAYBOOK.md
-│   └── REPRODUCIBILITY.md
-├── outputs/
-│   ├── plot_*.png
-│   ├── results_table.csv
-│   ├── safety_stock_table.csv
-│   ├── reorder_points_top10.csv
-│   └── quality_gate_report.json
-├── reports/
-│   ├── executive_report.md
-│   └── portfolio_case_study.md
-├── src/
-│   ├── download_data.py
-│   ├── run_pipeline.py
-│   └── validate_artifacts.py
-├── tests/
-│   ├── test_artifact_quality.py
-│   └── test_feature_engineering.py
-├── demand_forecasting.ipynb
-├── requirements.txt
-└── summary.md
+|-- app/
+|   `-- streamlit_app.py
+|-- config/
+|   `-- model_registry.json
+|-- data/
+|   |-- train.csv
+|   `-- store.csv
+|-- docs/
+|   |-- DATA_CARD.md
+|   |-- FEATURE_DICTIONARY.md
+|   |-- INTERVIEW_GUIDE.md
+|   |-- MODEL_CARD.md
+|   |-- OPERATIONS_PLAYBOOK.md
+|   |-- PROJECT_SCORE.md
+|   `-- REPRODUCIBILITY.md
+|-- outputs/
+|   |-- plot_*.png
+|   |-- results_table.csv
+|   |-- safety_stock_table.csv
+|   |-- reorder_points_top10.csv
+|   |-- kpi_scorecard.csv
+|   `-- quality_gate_report.json
+|-- reports/
+|   |-- executive_report.md
+|   `-- portfolio_case_study.md
+|-- src/
+|   |-- download_data.py
+|   |-- inventory_policy.py
+|   |-- run_pipeline.py
+|   `-- validate_artifacts.py
+|-- tests/
+|   |-- test_artifact_quality.py
+|   |-- test_feature_engineering.py
+|   `-- test_inventory_policy.py
+|-- demand_forecasting.ipynb
+|-- requirements.txt
+`-- summary.md
 ```
 
 ## Reproduce the Full Pipeline
@@ -112,12 +124,25 @@ python -m pip install -r requirements.txt
 python src/download_data.py --project-dir .
 python src/run_pipeline.py --project-dir .
 python src/validate_artifacts.py --project-dir .
+python -m pytest
 ```
 
 For a faster smoke run while iterating:
 
 ```powershell
 python src/run_pipeline.py --project-dir . --n-trials 8 --cv-sample-frac 0.20 --sarimax-store-count 3
+```
+
+Launch the dashboard:
+
+```powershell
+streamlit run app/streamlit_app.py
+```
+
+Calculate an inventory policy from the command line:
+
+```powershell
+python src/inventory_policy.py --average-daily-demand 500 --error-sigma 100 --service-level 0.95 --lead-time-days 7
 ```
 
 ## Validation
@@ -137,11 +162,13 @@ python -m pytest
 The validation gates check:
 
 - Ensemble MAPE below 12%
-- Required result files exist
+- Ensemble beats naive baseline
+- Required result files, docs, dashboard, and model registry exist
 - At least 12 publication-quality plots are present
 - Summary contains no placeholders
 - Notebook JSON is valid
 - Safety-stock and reorder-point artifacts are present
+- Model registry agrees with committed results
 
 ## Resume Bullets
 
